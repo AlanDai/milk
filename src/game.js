@@ -132,8 +132,7 @@ export default class MilkGame {
     ctx.fillStyle = "white";
     ctx.fillRect(965, 270, 20, 290);
 
-    let fillAmount = (100 - this.score) * 2.9
-
+    let fillAmount = (100 - Math.min(this.score, 100)) * 2.9
     ctx.fillStyle = "lightgray";
     ctx.fillRect(965, 270 + fillAmount, 20, 290 - fillAmount);
   }
@@ -166,7 +165,7 @@ export default class MilkGame {
   // collision handling
   handleMilkCollision() {
     this.milk = new Milk(this.dimensions)
-    this.score += 5;
+    this.score += 50;
   }
 
   handleBotCollision(dist) {
@@ -191,10 +190,19 @@ export default class MilkGame {
       }
     }
 
-    // score decay
+    if (this.score >= 100) {
+      this.levelOver();
+    }
+
+    // score decay/handling
     if (this.now - this.lastScore > 2000) {
+
       this.lastScore = this.now;
       this.score--;
+
+      if (this.score <= 0) {
+        this.gameOver();
+      }
     }
 
     // frame throttling
