@@ -11,6 +11,9 @@ export default class MilkGame {
 
     this.level = new Level(this.dimensions);
     this.level.animate(this.ctx);
+    this.playing = false;
+  
+    this.lastScore = Date.now() + 1000;
 
     // throttle
     this.then = Date.now();
@@ -37,6 +40,8 @@ export default class MilkGame {
 
   play() {
     this.running = true;
+    this.playing = true;
+    this.score = 20;
 
     this.milk = new Milk(this.dimensions);
     this.bots = [];
@@ -49,9 +54,14 @@ export default class MilkGame {
 
   restart() {
     this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
+
+    // reset document elements
+    document.getElementById("pause").style.display = "none";
+    document.getElementById("resume").style.display = "block";
     document.getElementById("game-over-screen").style.display = "none";
     let music = document.getElementById("music");
     music.currentTime = 0;
+
     this.lastBot = Date.now() + 1500;
     this.play();
   }
@@ -71,6 +81,12 @@ export default class MilkGame {
     this.animate();
   }
 
+  gameOver() {
+    this.running = false;
+    this.playing = false;
+    document.getElementById("game-over-screen").style.display = "block";
+  }
+
   // player movement
   registerEvents() {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
@@ -84,7 +100,11 @@ export default class MilkGame {
 
   handleKeyDown(e) {
     if(e.key === " ") {
-      this.running === true ? this.pause() : this.resume();
+      if (this.playing) {
+        this.running === true ? this.pause() : this.resume();
+      } else {
+        this.restart();
+      } 
     } else {
       this.keys[e.key] = true;
     }
@@ -123,18 +143,18 @@ export default class MilkGame {
   // collision handling
   handleMilkCollision() {
     this.milk = new Milk(this.dimensions)
+    this.score += 5;
   }
 
   handleBotCollision(dist) {
     if (dist < Math.random() * 150) {
-      document.getElementById("game-over-screen").style.display = "block";
-      this.pause();
+      this.gameOver();
     }
   }
 
   animate() {
     this.now = Date.now();
-    
+
     // bot generation
     let botElapsed = this.now - this.lastBot;
 
@@ -146,6 +166,13 @@ export default class MilkGame {
         let newBot = new Bot(this.dimensions);
         this.bots.push(newBot);
       }
+    }
+
+    console.log(this.score);
+    // score decay
+    if (this.now - this.lastScore > 2000) {
+      this.lastScore = this.now;
+      this.score--;
     }
 
     // frame throttling

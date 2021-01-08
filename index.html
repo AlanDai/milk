@@ -10,22 +10,24 @@
   <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
-  <h1>Milk</h1>
   <div id="start-screen">
-    <p>The plan is simple: stay quenched but stay 6 ft apart</p>
-    <p>There's a nasty flu outbreak out there</p>
+    <img src="cow.png" width=100 height=100/>
+    <h1>Milk</h1>
+    <p>The plan is simple: fill up your quench meter to reach the next level</p>
+    <p> But stay 6ft apart - there's a nasty flu outbreak in these here parts</p>
     <br/>
     <p>Controls: ▲ ▼ ◀ ▶ to move; SPACE to pause</p>
     <br/>
     <button id="start">START</button>
+    <p class="small-text-tips">(or press SPACE to start)</p>
   </div>
   <div id="game-over-screen">
     <p>Should have socially distanced</p>
-    <p>Don't worry, taste and smell were overrated anyways</p>
+    <p>Don't worry, taste and smell are overrated anyways</p>
     <br/>
     <img src="gameover.png" />
     <br/>
-    <button id="reset">Reset</button>
+    <button id="reset">RESTART</button>
     <p class="small-text-tips">(or press SPACE to restart)</p>
   </div>
   <div id="canvas-wrapper">
@@ -35,8 +37,8 @@
     <audio id="music" controls loop>
       <source src="background-music.mp3" type="audio/mpeg">
     </audio>
-    <button id="pause">Pause</button>
-    <button id="resume">Resume</button>
+    <button id="pause">PAUSE</button>
+    <button id="resume">RESUME</button>
   </div>
   <!-- <div id="instructions">
     <p>The plan is simple: stay quenched but stay 6 ft apart</p>

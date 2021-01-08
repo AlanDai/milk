@@ -1,17 +1,9 @@
-h1 {
-  font-size: 35px;
-  background-color: pink;
-  padding: 0 25px 0 25px;
-  border: none;
-  border-radius: 30px;
-}
-
 body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 50px;
   font-family: 'Varela Round', sans-serif;
 }
 
@@ -21,8 +13,8 @@ body * {
 
 #start-screen, #game-over-screen {
   position: absolute;
-  text-align: center;
   padding: 40px;
+  text-align: center;
   font-size: 20px;
 }
 
@@ -32,10 +24,22 @@ body * {
 
 #start-screen {
   display: block;
+  top: 60px;
+}
+
+#start-screen h1 {
+  font-size: 35px;
+  background-color: pink;
+  padding: 0 25px 0 25px;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  border: none;
+  border-radius: 30px;
 }
 
 #game-over-screen {
   display: none;
+  top: 110px;
   background: rgba(255, 255, 255, 0.8);
 }
 

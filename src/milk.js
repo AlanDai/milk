@@ -3,7 +3,7 @@ export default class Milk {
     this.dimensions = dimensions;
     this.type = 'milk';
 
-    this.x = Math.random() * (dimensions.width - 100) + 50;
+    this.x = Math.random() * (dimensions.width - 150) + 50;
     this.y = Math.random() * (dimensions.height - 100) + 50;
   }
 
