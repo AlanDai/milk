@@ -1,7 +1,7 @@
 export default class Player {
   constructor(dimensions) {
     const playerSprite = new Image();
-    playerSprite.src = "player.png";
+    playerSprite.src = "assets/player.png";
     this.image = playerSprite;
 
     this.type = 'player';

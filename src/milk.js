@@ -9,7 +9,7 @@ export default class Milk {
 
   drawMilk(ctx) {
     const milk = new Image();
-    milk.src = "milk.png";
+    milk.src = "assets/milk.png";
     ctx.drawImage(milk, this.x, this.y, 30, 40);
   }
 

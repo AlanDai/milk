@@ -1,7 +1,7 @@
 export default class Bot {
   constructor(dimensions) {
     const botSprite = new Image();
-    botSprite.src = "bot.png";
+    botSprite.src = "assets/bot.png";
     this.image = botSprite;
 
     this.type = 'bot';

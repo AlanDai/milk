@@ -5,7 +5,7 @@ export default class Level {
 
   drawBackground(ctx) {
     const background = new Image();
-    background.src = "background.png";
+    background.src = "assets/background.png";
     ctx.drawImage(background, 0, 0, this.dimensions.width, this.dimensions.height);
   }
 
