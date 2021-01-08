@@ -56,8 +56,8 @@ export default class MilkGame {
     this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
 
     // reset document elements
-    document.getElementById("pause").style.display = "none";
-    document.getElementById("resume").style.display = "block";
+    document.getElementById("pause").style.display = "block";
+    document.getElementById("resume").style.display = "none";
     document.getElementById("game-over-screen").style.display = "none";
     let music = document.getElementById("music");
     music.currentTime = 0;
@@ -87,7 +87,7 @@ export default class MilkGame {
     document.getElementById("game-over-screen").style.display = "block";
   }
 
-  // player movement
+  // player inputs
   registerEvents() {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
     window.addEventListener("keyup", this.handleKeyUp.bind(this));
@@ -113,6 +113,19 @@ export default class MilkGame {
   handleKeyUp(e) {
     if(this.keys[e.key]) delete this.keys[e.key];
     if(this.player) this.player.moving = false;
+  }
+
+  // score display
+  drawScore(ctx) {
+    ctx.fillStyle = "pink";
+    ctx.fillRect(960, 265, 30, 300);
+    ctx.fillStyle = "white";
+    ctx.fillRect(965, 270, 20, 290);
+
+    let fillAmount = (100 - this.score) * 2.9
+
+    ctx.fillStyle = "lightgray";
+    ctx.fillRect(965, 270 + fillAmount, 20, 290 - fillAmount);
   }
 
   // check collisions
@@ -168,7 +181,6 @@ export default class MilkGame {
       }
     }
 
-    console.log(this.score);
     // score decay
     if (this.now - this.lastScore > 2000) {
       this.lastScore = this.now;
@@ -207,6 +219,8 @@ export default class MilkGame {
 
       this.player.movePlayer(this.keys);
       this.player.animate(this.ctx);
+
+      this.drawScore(this.ctx);
     }
 
     requestAnimationFrame(this.animate.bind(this));
