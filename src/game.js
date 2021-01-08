@@ -9,18 +9,23 @@ export default class MilkGame {
     this.dimensions = { width: canvas.width, height: canvas.height }
     this.keys = {}
 
+    this.level = new Level(this.dimensions);
+    this.level.animate(this.ctx);
+
     // throttle
-    this.then = Date.now(); 
+    this.then = Date.now();
     this.now;
 
     // bot generation
-    this.lastBot = Date.now();
+    this.lastBot = Date.now() + 1500;
     this.bots = [];
+    this.lastBotCollision = Date.now();
 
     // binding
     this.play = this.play.bind(this);
     this.restart = this.restart.bind(this);
     this.pause = this.pause.bind(this);
+    this.resume = this.resume.bind(this);
     this.checkMilkCollisions = this.checkMilkCollisions.bind(this);
     this.checkBotCollisions = this.checkBotCollisions.bind(this);
     this.animate = this.animate.bind(this);
@@ -33,35 +38,28 @@ export default class MilkGame {
   play() {
     this.running = true;
 
-    this.level = new Level(this.dimensions);
     this.milk = new Milk(this.dimensions);
-    this.generateBots(3);
+    this.bots = [];
     this.player = new Player(this.dimensions);
-    
-    // music
+    document.getElementById("start-screen").style.display = "none";
     document.getElementById("music").play();
 
     this.animate();
   }
 
   restart() {
-    this.running = false;
-
     this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
-    this.level = new Level(this.dimensions);
-    this.player = new Player(this.dimensions);
-
-    this.level.animate(this.ctx);
-    this.player.animate(this.ctx);
-
-    document.getElementById("music").currentTime = 0;
+    document.getElementById("game-over-screen").style.display = "none";
+    let music = document.getElementById("music");
+    music.currentTime = 0;
+    this.lastBot = Date.now() + 1500;
+    this.play();
   }
 
   pause() {
     this.running = false;
     document.getElementById("pause").style.display = "none";
     document.getElementById("resume").style.display = "block";
-
     document.getElementById("music").pause();
   }
 
@@ -69,17 +67,8 @@ export default class MilkGame {
     this.running = true;
     document.getElementById("pause").style.display = "block";
     document.getElementById("resume").style.display = "none";
-
     document.getElementById("music").play();
-  }
-
-  // bot generation
-  generateBots(num) {
-    console.log(this);
-    for (var i = 0; i < num; i++) {
-      let bot = new Bot(this.dimensions);
-      this.bots.push(bot);
-    }
+    this.animate();
   }
 
   // player movement
@@ -94,18 +83,22 @@ export default class MilkGame {
   }
 
   handleKeyDown(e) {
-    this.keys[e.key] = true;
+    if(e.key === " ") {
+      this.running === true ? this.pause() : this.resume();
+    } else {
+      this.keys[e.key] = true;
+    }
   }
 
   handleKeyUp(e) {
-    delete this.keys[e.key];
+    if(this.keys[e.key]) delete this.keys[e.key];
     if(this.player) this.player.moving = false;
   }
 
   // check collisions
   checkMilkCollisions() {
     let dist = this.dist(this.player.x, this.player.y, this.milk.x, this.milk.y);
-    if (dist < this.player.width / 2) {
+    if (dist < this.player.width) {
       return true;
     }
     return false;
@@ -115,10 +108,10 @@ export default class MilkGame {
     for (let i = 0; i < this.bots.length; i++) {
       let dist = this.dist(this.player.x, this.player.y, this.bots[i].x, this.bots[i].y) 
       if (dist < (this.player.width + this.bots[i].width) / 1.5) {
-        return this.bots[i];
+        return dist;
       }
     }
-    return null;
+    return 0;
   }
 
   dist(x1, y1, x2, y2) {
@@ -127,17 +120,32 @@ export default class MilkGame {
     )
   }
 
+  // collision handling
+  handleMilkCollision() {
+    this.milk = new Milk(this.dimensions)
+  }
+
+  handleBotCollision(dist) {
+    if (dist < Math.random() * 150) {
+      document.getElementById("game-over-screen").style.display = "block";
+      this.pause();
+    }
+  }
+
   animate() {
     this.now = Date.now();
-
+    
     // bot generation
     let botElapsed = this.now - this.lastBot;
 
     if (botElapsed > 1500 && this.running) {
       this.lastBot = this.now - (botElapsed % 1500);
 
-      const newBot = new Bot(this.dimensions);
-      this.bots.push(newBot);
+      let numNewBots = Math.floor(Math.random() * 4);
+      for (let i = 0; i < numNewBots; i++) {
+        let newBot = new Bot(this.dimensions);
+        this.bots.push(newBot);
+      }
     }
 
     // frame throttling
@@ -148,19 +156,20 @@ export default class MilkGame {
 
       // collisions
       if(this.checkMilkCollisions()) {
-        this.milk = new Milk(this.dimensions);
+        this.handleMilkCollision.call(this);
       }
 
-      let collideBot = this.checkBotCollisions();
-      if (collideBot) {
-        console.log("YOU GOT COVID");
+      let botDist = this.checkBotCollisions();
+      if (botDist && this.now - this.lastBotCollision > 200) {
+        this.lastBotCollision = this.now;
+        this.handleBotCollision.call(this, botDist);
       }
 
       this.level.animate(this.ctx)
       this.milk.animate(this.ctx);
       
       // remove old bots
-      if (this.now - this.bots[0].createdAt > 10000) {
+      if (this.bots[0] && this.now - this.bots[0].createdAt > 10000) {
         this.bots.shift();
       }
       

@@ -6,20 +6,37 @@
   <title>Milk</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="stylesheets/style.css">
   <script type="text/javascript" src="dist/main.js" charset="utf-8" defer></script>
+  <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
   <h1>Milk</h1>
-  <canvas id="milk-game" height="600" width="900"></canvas>
+  <div id="start-screen">
+    <p>The plan is simple: stay quenched but stay 6 ft apart</p>
+    <p>There's a nasty flu outbreak out there</p>
+    <br/>
+    <p>Controls: ▲ ▼ ◀ ▶ to move; SPACE to pause</p>
+    <br/>
+    <button id="start">START</button>
+  </div>
+  <div id="game-over-screen">
+    <p>Should have socially distanced</p>
+    <p>Don't worry, taste and smell were overrated anyways</p>
+    <br/>
+    <img src="gameover.png" />
+    <br/>
+    <button id="reset">Reset</button>
+    <p class="small-text-tips">(or press SPACE to restart)</p>
+  </div>
+  <div id="canvas-wrapper">
+    <canvas id="milk-game" height="575" width="1000"></canvas>
+  </div>  
   <div id="controls">
     <audio id="music" controls loop>
       <source src="background-music.mp3" type="audio/mpeg">
     </audio>
-    <button id="start">START</button>
-    <button id="pause">PAUSE</button>
-    <button id="resume">RESUME</button>
-    <button id="reset">RESET</button>
+    <button id="pause">Pause</button>
+    <button id="resume">Resume</button>
   </div>
   <!-- <div id="instructions">
     <p>The plan is simple: stay quenched but stay 6 ft apart</p>

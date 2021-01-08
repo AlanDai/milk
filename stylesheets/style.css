@@ -1,9 +1,6 @@
 h1 {
-  font-family: 'Varela Round', sans-serif;
-  font-size: 40px;
-
+  font-size: 35px;
   background-color: pink;
-
   padding: 0 25px 0 25px;
   border: none;
   border-radius: 30px;
@@ -15,10 +12,45 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+  font-family: 'Varela Round', sans-serif;
 }
 
 body * {
   margin: 10px;
+}
+
+#start-screen, #game-over-screen {
+  position: absolute;
+  text-align: center;
+  padding: 40px;
+  font-size: 20px;
+}
+
+#start-screen *, #game-over-screen *{
+  position: relative;
+}
+
+#start-screen {
+  display: block;
+}
+
+#game-over-screen {
+  display: none;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.small-text-tips {
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+#canvas-wrapper {
+  border: 5px solid pink;
+  margin: 0px;
+}
+
+#canvas {
+  margin: 0px;
 }
 
 #controls {
@@ -27,11 +59,15 @@ body * {
   align-items: center;
 }
 
-#controls button {
+#controls button, #start, #reset {
   padding: 19px;
   background-color: pink;
   border: none;
   border-radius: 30px;
+}
+
+#pause, #resume {
+  width: 90px;
 }
 
 #controls *:focus {
