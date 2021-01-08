@@ -4,6 +4,7 @@ export default class Player {
     playerSprite.src = "player.png";
     this.image = playerSprite;
 
+    this.type = 'player';
     this.dimensions = dimensions;
     this.x = 100;
     this.y = 100;

@@ -9,3 +9,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+body * {
+  margin: 10px;
+}

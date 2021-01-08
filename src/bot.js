@@ -4,6 +4,7 @@ export default class Bot {
     botSprite.src = "bot.png";
     this.image = botSprite;
 
+    this.type = 'bot';
     this.dimensions = dimensions;
 
     // position

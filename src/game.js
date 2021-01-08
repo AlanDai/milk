@@ -1,4 +1,5 @@
 import Player from "./player";
+import Milk from "./milk";
 import Bot from "./bot";
 import Level from "./level";
 
@@ -27,6 +28,7 @@ export default class MilkGame {
   restart() {
     this.running = false;
     this.level = new Level(this.dimensions);
+    this.milk = new Milk(this.dimensions);
     this.player = new Player(this.dimensions);
     this.bots = this.generateBots(3);
 
@@ -46,7 +48,7 @@ export default class MilkGame {
   // player movement
   registerEvents() {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
-    window.addEventListener("keyup", this.handleKeyUp.bind(this));
+    window.addEventListener("keyup", this.handleKeyUp.bind(this));    
   }
 
   handleKeyDown(e) {
@@ -57,9 +59,6 @@ export default class MilkGame {
     delete this.keys[e.key];
     this.player.moving = false;
   }
-
-  // collisions
-
 
   animate() {
     this.now = Date.now();
@@ -82,6 +81,7 @@ export default class MilkGame {
       this.then = this.now - (elapsed % 40);
 
       this.level.animate(this.ctx)
+      this.milk.animate(this.ctx);
       this.player.movePlayer(this.keys);
       this.player.animate(this.ctx);
 
