@@ -15,6 +15,8 @@ export default class Player {
     
     this.moving = false;
     this.speed = 10;
+
+    this.createdAt = Date.now();
   }
 
   movePlayer(keys) {
@@ -67,6 +69,7 @@ export default class Player {
 
     ctx.beginPath();
     ctx.arc(this.x + this.width/2, this.y + this.height/2, 50, 0, 2*Math.PI);
+    ctx.strokeStyle = "white";
     ctx.stroke();
   }
 }

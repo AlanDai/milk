@@ -1,0 +1,11 @@
+h1 {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 40px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

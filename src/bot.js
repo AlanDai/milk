@@ -14,15 +14,16 @@ export default class Bot {
 
     this.generateStartValues();
 
-    this.width = 213;
-    this.height = 258;
+    this.width = 109;
+    this.height = 174;
     this.frameX = 0;
-    this.frameY = 0;
+    this.frameY;
     
     this.moving = true;
+    this.createdAt = Date.now();
   }
 
-  generateStartLocation() {
+  generateStartValues() {
     const val = Math.random() * 4,
           randWidth = Math.random() * this.dimensions.width,
           randHeight = Math.random() * this.dimensions.height;
@@ -31,18 +32,22 @@ export default class Bot {
       this.x = -100;
       this.y = randHeight;
       this.dx = 10;
+      this.frameY = 3;
     } else if (val < 2) {
       this.x = this.dimensions.width + 100;
       this.y = randHeight;
       this.dx = -10;
+      this.frameY = 2;
     } else if (val < 3) {
       this.x = randWidth;
       this.y = -100;
       this.dy = 10;
+      this.frameY = 0;
     } else {
       this.x = randWidth;
       this.y = this.dimensions.height + 100;
       this.dy = -10;
+      this.frameY = 1 ;
     }
   }
 
@@ -62,7 +67,6 @@ export default class Bot {
   }
 
   animate(ctx) {
-    ctx.scale(0.3, 3);
     ctx.drawImage(this.image,
       this.width * this.frameX,
       this.height * this.frameY,
@@ -70,11 +74,11 @@ export default class Bot {
       this.height,
       this.x,
       this.y,
-      this.width,
-      this.height);
+      this.width/3,
+      this.height/3);
 
     ctx.beginPath();
-    ctx.arc(this.x + this.width/2, this.y + this.height/2, 50, 0, 2*Math.PI);
+    ctx.arc(this.x + this.width/6, this.y + this.height/6, 50, 0, 2*Math.PI);
     ctx.stroke();
   }
 }

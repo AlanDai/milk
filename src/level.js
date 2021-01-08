@@ -4,11 +4,13 @@ export default class Level {
   }
 
   drawBackground(ctx) {
-    ctx.fillStyle = "#90EE90";
-    ctx.fillRect(0, 0, this.dimensions.width, this.dimensions.height);
+    const background = new Image();
+    background.src = "background.png";
+    ctx.drawImage(background, 0, 0, this.dimensions.width, this.dimensions.height);
   }
 
   animate(ctx) {
+    ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
     this.drawBackground(ctx);
   }
 }
