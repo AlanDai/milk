@@ -1,6 +1,12 @@
 h1 {
   font-family: 'Varela Round', sans-serif;
   font-size: 40px;
+
+  background-color: pink;
+
+  padding: 0 25px 0 25px;
+  border: none;
+  border-radius: 30px;
 }
 
 body {
@@ -8,8 +14,38 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 }
 
 body * {
   margin: 10px;
+}
+
+#controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#controls button {
+  padding: 19px;
+  background-color: pink;
+  border: none;
+  border-radius: 30px;
+}
+
+#controls *:focus {
+  outline: none;
+}
+
+#controls button:hover {
+  background-color: hotpink;
+}
+
+#pause {
+  display: block;
+}
+
+#resume {
+  display: none;
 }
