@@ -59,6 +59,7 @@ export default class MilkGame {
     document.getElementById("pause").style.display = "block";
     document.getElementById("resume").style.display = "none";
     document.getElementById("game-over-screen").style.display = "none";
+    document.getElementById("level-over-screen").style.display = "none";
     let music = document.getElementById("music");
     music.currentTime = 0;
 
@@ -87,7 +88,13 @@ export default class MilkGame {
     document.getElementById("game-over-screen").style.display = "block";
   }
 
-  // player inputs
+  levelOver() {
+    this.running = false;
+    this.playing = false;
+    document.getElementById("level-over-screen").style.display = "block";
+  }
+
+  // player movement
   registerEvents() {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
     window.addEventListener("keyup", this.handleKeyUp.bind(this));
@@ -95,7 +102,10 @@ export default class MilkGame {
     document.getElementById("start").addEventListener("click", this.play);
     document.getElementById("pause").addEventListener("click", this.pause);
     document.getElementById("resume").addEventListener("click", this.resume);
-    document.getElementById("reset").addEventListener("click", this.restart);
+    document.getElementById("reset").addEventListener("click", this.restart)
+
+    // placeholder
+    document.getElementById("level-reset").addEventListener("click", this.restart)
   }
 
   handleKeyDown(e) {
@@ -115,15 +125,14 @@ export default class MilkGame {
     if(this.player) this.player.moving = false;
   }
 
-  // score display
+  // score
   drawScore(ctx) {
     ctx.fillStyle = "pink";
     ctx.fillRect(960, 265, 30, 300);
     ctx.fillStyle = "white";
     ctx.fillRect(965, 270, 20, 290);
 
-    let fillAmount = (100 - this.score) * 2.9
-
+    let fillAmount = (100 - Math.min(this.score, 100)) * 2.9
     ctx.fillStyle = "lightgray";
     ctx.fillRect(965, 270 + fillAmount, 20, 290 - fillAmount);
   }
@@ -156,7 +165,7 @@ export default class MilkGame {
   // collision handling
   handleMilkCollision() {
     this.milk = new Milk(this.dimensions)
-    this.score += 5;
+    this.score += 50;
   }
 
   handleBotCollision(dist) {
@@ -181,10 +190,19 @@ export default class MilkGame {
       }
     }
 
-    // score decay
+    if (this.score >= 100) {
+      this.levelOver();
+    }
+
+    // score decay/handling
     if (this.now - this.lastScore > 2000) {
+
       this.lastScore = this.now;
       this.score--;
+
+      if (this.score <= 0) {
+        this.gameOver();
+      }
     }
 
     // frame throttling
@@ -219,7 +237,7 @@ export default class MilkGame {
 
       this.player.movePlayer(this.keys);
       this.player.animate(this.ctx);
-
+      
       this.drawScore(this.ctx);
     }
 

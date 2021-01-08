@@ -11,7 +11,7 @@ body * {
   margin: 10px;
 }
 
-#start-screen, #game-over-screen {
+#start-screen, #game-over-screen, #level-over-screen {
   position: absolute;
   padding: 40px;
   text-align: center;
@@ -43,6 +43,13 @@ body * {
   background: rgba(255, 255, 255, 0.8);
 }
 
+#level-over-screen {
+  display: none;
+  margin-top: 20px;
+  top: 180px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
 .small-text-tips {
   font-size: 12px;
   margin-top: 0px;
@@ -63,7 +70,7 @@ body * {
   align-items: center;
 }
 
-#controls button, #start, #reset {
+#controls button, #start, #reset, #level-reset {
   padding: 19px;
   background-color: pink;
   border: none;
