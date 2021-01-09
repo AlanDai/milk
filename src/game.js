@@ -56,8 +56,8 @@ export default class MilkGame {
     this.ctx.clearRect(0, 0, this.dimensions.width, this.dimensions.height);
 
     // reset document elements
-    document.getElementById("pause").style.display = "none";
-    document.getElementById("resume").style.display = "block";
+    document.getElementById("pause").style.display = "block";
+    document.getElementById("resume").style.display = "none";
     document.getElementById("game-over-screen").style.display = "none";
     document.getElementById("level-over-screen").style.display = "none";
     let music = document.getElementById("music");
