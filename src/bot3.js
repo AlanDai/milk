@@ -1,7 +1,7 @@
-export default class Bot {
+export default class Bot3 {
   constructor(dimensions) {
     const botSprite = new Image();
-    botSprite.src = "assets/bot.png";
+    botSprite.src = `assets/bot3.png`;
     this.image = botSprite;
 
     this.type = 'bot';
@@ -15,8 +15,8 @@ export default class Bot {
 
     this.generateStartValues();
 
-    this.width = 109;
-    this.height = 174;
+    this.width = 130;
+    this.height = 127;
     this.frameX = 0;
     this.frameY;
     
@@ -33,12 +33,12 @@ export default class Bot {
       this.x = -100;
       this.y = randHeight;
       this.dx = 10;
-      this.frameY = 3;
+      this.frameY = 2;
     } else if (val < 2) {
       this.x = this.dimensions.width + 100;
       this.y = randHeight;
       this.dx = -10;
-      this.frameY = 2;
+      this.frameY = 1;
     } else if (val < 3) {
       this.x = randWidth;
       this.y = -100;
@@ -48,7 +48,7 @@ export default class Bot {
       this.x = randWidth;
       this.y = this.dimensions.height + 100;
       this.dy = -10;
-      this.frameY = 1 ;
+      this.frameY = 3;
     }
   }
 
