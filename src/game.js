@@ -1,6 +1,8 @@
 import Player from "./player";
 import Milk from "./milk";
-import Bot from "./bot";
+import Bot1 from "./bot1";
+import Bot2 from "./bot2";
+import Bot3 from "./bot3";
 import Level from "./level";
 
 export default class MilkGame {
@@ -186,7 +188,15 @@ export default class MilkGame {
 
       let numNewBots = Math.floor(Math.random() * 4);
       for (let i = 0; i < numNewBots; i++) {
-        let newBot = new Bot(this.dimensions);
+        let newBot;
+        let val = (Math.random() * 3)
+        if (val > 2) {
+          newBot = new Bot1(this.dimensions);
+        } else if (val > 1) {
+          newBot = new Bot2(this.dimensions);
+        } else {
+          newBot = new Bot3(this.dimensions);
+        }
         this.bots.push(newBot);
       }
     }
