@@ -82,10 +82,11 @@ export default class MilkGame {
     this.animate();
   }
 
-  gameOver() {
+  gameOver(innerText) {
     this.running = false;
     this.playing = false;
     document.getElementById("game-over-screen").style.display = "block";
+    document.getElementById("game-over-message").innerHTML = innerText;
   }
 
   levelOver() {
@@ -165,12 +166,12 @@ export default class MilkGame {
   // collision handling
   handleMilkCollision() {
     this.milk = new Milk(this.dimensions)
-    this.score += 50;
+    this.score += 5;
   }
 
   handleBotCollision(dist) {
     if (dist < Math.random() * 150) {
-      this.gameOver();
+      this.gameOver("Should have socially distanced - ehh, taste and smell are overrated anyways");
     }
   }
 
@@ -198,10 +199,10 @@ export default class MilkGame {
     if (this.now - this.lastScore > 2000) {
 
       this.lastScore = this.now;
-      this.score--;
+      this.score -= 2;
 
       if (this.score <= 0) {
-        this.gameOver();
+        this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
       }
     }
 
