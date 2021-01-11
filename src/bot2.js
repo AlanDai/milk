@@ -9,7 +9,6 @@ export default class Bot2 {
 
     // position
     this.x, this.y;
-    // axially separated speed
     this.speed = 5;
     this.dx = 0;
     this.dy = 0;
@@ -69,15 +68,19 @@ export default class Bot2 {
   moveBot(playerX, playerY) {
     this.handleBotFrame();
     
-    if (!this.chasing && this.dist(playerX, playerY, this.x, this.y) < 200) {
+    let dist = this.dist(playerX, playerY, this.x, this.y);
+    if (!this.chasing && dist < 200) {
       this.chasing = true;
+    }
+
+    if (this.chasing && dist > 300) {
+      this.chasing = false;
     }
     
     if (this.chasing) {
-      let movement = this.calcMoveTo(this.speed, this.x, this.y, playerX, playerY)
+      let movement = this.calcMoveTo(this.speed, this.x, this.y, playerX, playerY);
       this.dx = movement[0];
       this.dy = movement[1];
-      console.log(this.dx, this.dy)
     }
 
     this.x += this.dx;

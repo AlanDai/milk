@@ -184,10 +184,10 @@ export default class MilkGame {
     // bot generation
     let botElapsed = this.now - this.lastBot;
 
-    if (botElapsed > 1500 && this.running) {
+    if (botElapsed > 1500 && this.running && this.bots.length < 10) {
       this.lastBot = this.now - (botElapsed % 1500);
 
-      let numNewBots = Math.floor(Math.random() * 4);
+      let numNewBots = Math.floor(Math.random() * 3);
       for (let i = 0; i < numNewBots; i++) {
         let newBot;
         let val = (Math.random() * 10)
@@ -235,12 +235,14 @@ export default class MilkGame {
       this.level.animate(this.ctx)
       this.milk.animate(this.ctx);
       
-      // remove old bots
-      if (this.bots[0] && this.now - this.bots[0].createdAt > 10000) {
-        this.bots.shift();
-      }
-      
       for(var i = 0; i < this.bots.length; i++){
+
+        // clear out of bounds bots
+        if ((this.bots[i].x < 0 || this.bots[i].x > this.dimensions.width) &&
+            (this.bots[i].y < 0 || this.bots[i].y > this.dimensions.height)) {
+          this.bots.splice(i, 1);
+        }
+
         this.bots[i].moveBot(this.player.x, this.player.y);
         this.bots[i].animate(this.ctx);
       }
