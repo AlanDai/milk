@@ -9,9 +9,10 @@ export default class Bot1 {
 
     // position
     this.x, this.y;
-    // axially separated speed
+    this.speed = 2;
     this.dx = 0;
     this.dy = 0;
+    this.moveBot = this.moveBot.bind(this);
 
     this.generateStartValues();
 
@@ -52,8 +53,23 @@ export default class Bot1 {
     }
   }
 
-  moveBot() {
+  dist(x1, y1, x2, y2) {
+    return Math.sqrt(
+      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
+    )
+  }
+  
+  calcMoveTo(speed, sX, sY, dX, dY) {
+    let angle = Math.atan2((dY - sY), (dX - sX));
+    return [speed * Math.cos(angle), speed * Math.sin(angle)];
+  }
+
+  moveBot(playerX, playerY) {
     this.handleBotFrame();
+
+    let movement = this.calcMoveTo(this.speed, this.x, this.y, playerX, playerY);
+    this.dx = movement[0];
+    this.dy = movement[1];
 
     this.x += this.dx;
     this.y += this.dy;

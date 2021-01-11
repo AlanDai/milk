@@ -9,9 +9,11 @@ export default class Bot2 {
 
     // position
     this.x, this.y;
-    // axially separated speed
+    this.speed = 4;
     this.dx = 0;
     this.dy = 0;
+    this.chasing = false;
+    this.moveBot = this.moveBot.bind(this);
 
     this.generateStartValues();
 
@@ -32,28 +34,54 @@ export default class Bot2 {
     if (val < 1) {
       this.x = -100;
       this.y = randHeight;
-      this.dx = 10;
+      this.dx = this.speed;
       this.frameY = 2;
     } else if (val < 2) {
       this.x = this.dimensions.width + 100;
       this.y = randHeight;
-      this.dx = -10;
+      this.dx = -this.speed;
       this.frameY = 1;
     } else if (val < 3) {
       this.x = randWidth;
       this.y = -100;
-      this.dy = 10;
+      this.dy = this.speed;
       this.frameY = 0;
     } else {
       this.x = randWidth;
       this.y = this.dimensions.height + 100;
-      this.dy = -10;
+      this.dy = -this.speed;
       this.frameY = 3;
     }
   }
 
-  moveBot() {
+  dist(x1, y1, x2, y2) {
+    return Math.sqrt(
+      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
+    )
+  }
+
+  calcMoveTo(speed, sX, sY, dX, dY) {
+    let angle = Math.atan2((dY - sY), (dX - sX));
+    return [speed * Math.cos(angle), speed * Math.sin(angle)];
+  }
+
+  moveBot(playerX, playerY) {
     this.handleBotFrame();
+    
+    let dist = this.dist(playerX, playerY, this.x, this.y);
+    if (!this.chasing && dist < 200) {
+      this.chasing = true;
+    }
+
+    if (this.chasing && dist > 300) {
+      this.chasing = false;
+    }
+    
+    if (this.chasing) {
+      let movement = this.calcMoveTo(this.speed, this.x, this.y, playerX, playerY);
+      this.dx = movement[0];
+      this.dy = movement[1];
+    }
 
     this.x += this.dx;
     this.y += this.dy;

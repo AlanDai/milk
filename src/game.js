@@ -11,6 +11,7 @@ export default class MilkGame {
     this.dimensions = { width: canvas.width, height: canvas.height }
     this.keys = {}
 
+    this.startScreen = true;
     this.level = new Level(this.dimensions);
     this.level.animate(this.ctx);
     this.playing = false;
@@ -27,6 +28,7 @@ export default class MilkGame {
     this.lastBotCollision = Date.now();
 
     // binding
+    this.showBots = this.showBots.bind(this);
     this.play = this.play.bind(this);
     this.restart = this.restart.bind(this);
     this.pause = this.pause.bind(this);
@@ -40,15 +42,22 @@ export default class MilkGame {
 
   // general game controls
 
+  showBots() {
+    this.startScreen = false;
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("bot-screen").style.display = "block";
+  }
+
   play() {
     this.running = true;
     this.playing = true;
     this.score = 20;
+    this.gameStart = Date.now();
 
     this.milk = new Milk(this.dimensions);
     this.bots = [];
     this.player = new Player(this.dimensions);
-    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("bot-screen").style.display = "none";
     document.getElementById("music").play();
 
     this.animate();
@@ -102,6 +111,7 @@ export default class MilkGame {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
     window.addEventListener("keyup", this.handleKeyUp.bind(this));
 
+    document.getElementById("next").addEventListener("click", this.showBots);
     document.getElementById("start").addEventListener("click", this.play);
     document.getElementById("pause").addEventListener("click", this.pause);
     document.getElementById("resume").addEventListener("click", this.resume);
@@ -113,7 +123,9 @@ export default class MilkGame {
 
   handleKeyDown(e) {
     if(e.key === " ") {
-      if (this.playing) {
+      if (this.startScreen) {
+        this.showBots();
+      } else if (this.playing) {
         this.running === true ? this.pause() : this.resume();
       } else {
         this.restart();
@@ -173,7 +185,7 @@ export default class MilkGame {
 
   handleBotCollision(dist) {
     if (dist < Math.random() * 150) {
-      this.gameOver("Should have socially distanced - ehh, taste and smell are overrated anyways");
+      this.gameOver("Should have socially distanced - taste and smell are overrated anyways");
     }
   }
 
@@ -183,16 +195,16 @@ export default class MilkGame {
     // bot generation
     let botElapsed = this.now - this.lastBot;
 
-    if (botElapsed > 1500 && this.running) {
+    if (botElapsed > 1500 && this.running && this.bots.length < 10) {
       this.lastBot = this.now - (botElapsed % 1500);
 
-      let numNewBots = Math.floor(Math.random() * 4);
+      let numNewBots = Math.floor(Math.random() * 3);
       for (let i = 0; i < numNewBots; i++) {
         let newBot;
-        let val = (Math.random() * 3)
-        if (val > 2) {
+        let val = (Math.random() * 10)
+        if (val > 9 && this.now - this.gameStart > 10000) {
           newBot = new Bot1(this.dimensions);
-        } else if (val > 1) {
+        } else if (val > 7 && this.now - this.gameStart > 5000) {
           newBot = new Bot2(this.dimensions);
         } else {
           newBot = new Bot3(this.dimensions);
@@ -201,19 +213,10 @@ export default class MilkGame {
       }
     }
 
-    if (this.score >= 100) {
-      this.levelOver();
-    }
-
-    // score decay/handling
+    // score decay
     if (this.now - this.lastScore > 2000) {
-
       this.lastScore = this.now;
       this.score -= 2;
-
-      if (this.score <= 0) {
-        this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
-      }
     }
 
     // frame throttling
@@ -221,6 +224,13 @@ export default class MilkGame {
 
     if (elapsed > 40 && this.running) {
       this.then = this.now - (elapsed % 40);
+
+      // score handling
+      if (this.score <= 0) {
+        this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
+      } else if (this.score >= 100) {
+         this.levelOver();
+      }
 
       // collisions
       if(this.checkMilkCollisions()) {
@@ -236,13 +246,15 @@ export default class MilkGame {
       this.level.animate(this.ctx)
       this.milk.animate(this.ctx);
       
-      // remove old bots
-      if (this.bots[0] && this.now - this.bots[0].createdAt > 10000) {
-        this.bots.shift();
-      }
-      
       for(var i = 0; i < this.bots.length; i++){
-        this.bots[i].moveBot();
+
+        // clear out of bounds bots
+        if ((this.bots[i].x < 0 || this.bots[i].x > this.dimensions.width) &&
+            (this.bots[i].y < 0 || this.bots[i].y > this.dimensions.height)) {
+          this.bots.splice(i, 1);
+        }
+
+        this.bots[i].moveBot(this.player.x, this.player.y);
         this.bots[i].animate(this.ctx);
       }
 
