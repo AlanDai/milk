@@ -9,7 +9,7 @@ export default class Bot2 {
 
     // position
     this.x, this.y;
-    this.speed = 5;
+    this.speed = 4;
     this.dx = 0;
     this.dy = 0;
     this.chasing = false;

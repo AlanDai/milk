@@ -9,7 +9,7 @@ export default class Bot1 {
 
     // position
     this.x, this.y;
-    this.speed = 3;
+    this.speed = 2;
     this.dx = 0;
     this.dy = 0;
     this.moveBot = this.moveBot.bind(this);
