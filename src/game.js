@@ -44,6 +44,7 @@ export default class MilkGame {
     this.running = true;
     this.playing = true;
     this.score = 20;
+    this.gameStart = Date.now();
 
     this.milk = new Milk(this.dimensions);
     this.bots = [];
@@ -189,10 +190,10 @@ export default class MilkGame {
       let numNewBots = Math.floor(Math.random() * 4);
       for (let i = 0; i < numNewBots; i++) {
         let newBot;
-        let val = (Math.random() * 3)
-        if (val > 2) {
+        let val = (Math.random() * 10)
+        if (val > 9 && this.now - this.gameStart > 10000) {
           newBot = new Bot1(this.dimensions);
-        } else if (val > 1) {
+        } else if (val > 7 && this.now - this.gameStart > 5000) {
           newBot = new Bot2(this.dimensions);
         } else {
           newBot = new Bot3(this.dimensions);
@@ -201,19 +202,10 @@ export default class MilkGame {
       }
     }
 
-    if (this.score >= 100) {
-      this.levelOver();
-    }
-
-    // score decay/handling
+    // score decay
     if (this.now - this.lastScore > 2000) {
-
       this.lastScore = this.now;
       this.score -= 2;
-
-      if (this.score <= 0) {
-        this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
-      }
     }
 
     // frame throttling
@@ -221,6 +213,13 @@ export default class MilkGame {
 
     if (elapsed > 40 && this.running) {
       this.then = this.now - (elapsed % 40);
+
+      // score handling
+      if (this.score <= 0) {
+        this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
+      } else if (this.score >= 100) {
+         this.levelOver();
+      }
 
       // collisions
       if(this.checkMilkCollisions()) {
@@ -242,7 +241,7 @@ export default class MilkGame {
       }
       
       for(var i = 0; i < this.bots.length; i++){
-        this.bots[i].moveBot();
+        this.bots[i].moveBot(this.player.x, this.player.y);
         this.bots[i].animate(this.ctx);
       }
 
