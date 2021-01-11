@@ -2,7 +2,7 @@
 
 A simple Javascript game about getting milk in peculiar times
 
-#Made (with care0 with:
+# Made (with care) with:
 - Canvas for 2d image rendering
 - JavaScript for logic
 - HTML and CSS for visual structure
