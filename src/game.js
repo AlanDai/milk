@@ -130,7 +130,7 @@ export default class MilkGame {
       } else {
         this.restart();
       } 
-    } else {
+    } else {  
       this.keys[e.key] = true;
     }
   }
