@@ -18,25 +18,42 @@
     <br/>
     <p>Controls: ▲ ▼ ◀ ▶ to move; SPACE to pause</p>
     <br/>
+    <button id="next">NEXT</button>
+    <p class="small-text-tips">(or press SPACE)</p>
+  </div>
+  <div id="bot-screen">
+    <h1>Meet the neighbors</h1>
+    <div class="bot-item">
+      <img src="assets/bot1-front.png" width=40 height=60>
+      <p><b>The social butterfly:</b> they're gonna get ya eventually</p>
+    </div>
+    <div class="bot-item">
+      <img src="assets/bot2-front.png" width=40 height=60>
+      <p><b>The casual conversationalist:</b> they'll chase ya if you're in their space</p>
+    </div>
+    <div class="bot-item">
+      <img src="assets/bot3-front.png" width=40 height=60>
+      <p><b>The speedster:</b> you can hear "I AM SPEED" as they zip pass you</p>
+    </div>
     <button id="start">START</button>
-    <p class="small-text-tips">(or press SPACE to start)</p>
+    <p class="small-text-tips">(or press SPACE)</p>
   </div>
   <div id="game-over-screen">
+    <h1>Game over</h1>
     <p id="game-over-message"></p>
     <p>Lucky for you, Nurse Joy has brought you to full health</p>
-    <br/>
     <img src="assets/gameover.png" />
     <br/>
     <button id="reset">RESTART</button>
-    <p class="small-text-tips">(or press SPACE to restart)</p>
+    <p class="small-text-tips">(or press SPACE)</p>
   </div>
   <div id="level-over-screen">
     <p>Wow, you've satisfied your milk quench</p>
-    <p>But another day comes and your thirst is back</p>
+    <p>But another day will come and your thirst will come back</p>
     </br>
-    <p>New level coming (very) soon! The bots are learning 👻</p>
+    <p>🗺 More stage layouts in the works 🗺</p>
     <button id="level-reset">RESTART</button>
-    <p class="small-text-tips">(or press SPACE to restart)</p>
+    <p class="small-text-tips">(or press SPACE)</p>
   </div>
   <div id="canvas-wrapper">
     <canvas id="milk-game" height="575" width="1000"></canvas>

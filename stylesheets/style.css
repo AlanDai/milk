@@ -11,7 +11,7 @@ body * {
   margin: 10px;
 }
 
-#start-screen, #game-over-screen, #level-over-screen {
+#start-screen, #bot-screen, #game-over-screen, #level-over-screen {
   position: absolute;
   padding: 40px;
   text-align: center;
@@ -27,7 +27,7 @@ body * {
   top: 60px;
 }
 
-#start-screen h1 {
+#start-screen h1, #bot-screen h1, #game-over-screen h1 {
   font-size: 35px;
   background-color: pink;
   padding: 0 25px 0 25px;
@@ -37,9 +37,23 @@ body * {
   border-radius: 30px;
 }
 
+#bot-screen {
+  display: none;
+  top: 100px;
+  background: rgba(255, 255, 255, 0.8)
+}
+
+.bot-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+}
+
 #game-over-screen {
   display: none;
-  top: 110px;
+  top: 85px;
   background: rgba(255, 255, 255, 0.8);
 }
 
@@ -70,7 +84,7 @@ body * {
   align-items: center;
 }
 
-#controls button, #start, #reset, #level-reset {
+#controls button, #start, #next, #reset, #level-reset {
   padding: 19px;
   background-color: pink;
   border: none;

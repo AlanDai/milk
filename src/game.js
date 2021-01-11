@@ -11,6 +11,7 @@ export default class MilkGame {
     this.dimensions = { width: canvas.width, height: canvas.height }
     this.keys = {}
 
+    this.startScreen = true;
     this.level = new Level(this.dimensions);
     this.level.animate(this.ctx);
     this.playing = false;
@@ -27,6 +28,7 @@ export default class MilkGame {
     this.lastBotCollision = Date.now();
 
     // binding
+    this.showBots = this.showBots.bind(this);
     this.play = this.play.bind(this);
     this.restart = this.restart.bind(this);
     this.pause = this.pause.bind(this);
@@ -40,6 +42,12 @@ export default class MilkGame {
 
   // general game controls
 
+  showBots() {
+    this.startScreen = false;
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("bot-screen").style.display = "block";
+  }
+
   play() {
     this.running = true;
     this.playing = true;
@@ -49,7 +57,7 @@ export default class MilkGame {
     this.milk = new Milk(this.dimensions);
     this.bots = [];
     this.player = new Player(this.dimensions);
-    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("bot-screen").style.display = "none";
     document.getElementById("music").play();
 
     this.animate();
@@ -103,6 +111,7 @@ export default class MilkGame {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
     window.addEventListener("keyup", this.handleKeyUp.bind(this));
 
+    document.getElementById("next").addEventListener("click", this.showBots);
     document.getElementById("start").addEventListener("click", this.play);
     document.getElementById("pause").addEventListener("click", this.pause);
     document.getElementById("resume").addEventListener("click", this.resume);
@@ -114,7 +123,9 @@ export default class MilkGame {
 
   handleKeyDown(e) {
     if(e.key === " ") {
-      if (this.playing) {
+      if (this.startScreen) {
+        this.showBots();
+      } else if (this.playing) {
         this.running === true ? this.pause() : this.resume();
       } else {
         this.restart();
@@ -174,7 +185,7 @@ export default class MilkGame {
 
   handleBotCollision(dist) {
     if (dist < Math.random() * 150) {
-      this.gameOver("Should have socially distanced - ehh, taste and smell are overrated anyways");
+      this.gameOver("Should have socially distanced - taste and smell are overrated anyways");
     }
   }
 
