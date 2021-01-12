@@ -103,6 +103,10 @@ body * {
   background-color: hotpink;
 }
 
+#controls a {
+  margin-right: 0px;
+}
+
 #pause {
   display: block;
 }
