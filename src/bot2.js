@@ -105,7 +105,7 @@ export default class Bot2 {
       this.y,
       this.width,
       this.height);
-
+ 
     ctx.beginPath();
     ctx.arc(this.x + this.width/2, this.y + this.height/2, 50, 0, 2*Math.PI);
     ctx.stroke();

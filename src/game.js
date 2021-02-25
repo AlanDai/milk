@@ -150,14 +150,16 @@ export default class MilkGame {
     let fillAmount = (100 - Math.min(this.score, 100)) * 2.9
     ctx.fillStyle = "lightgray";
     ctx.fillRect(965, 270 + fillAmount, 20, 290 - fillAmount);
+
+    ctx.font = "30px Arial"
+    ctx.fillStyle = "pink";
+    ctx.fillText("Score", 300, 300, 300);
   }
 
   // check collisions
   checkMilkCollisions() {
     let dist = this.dist(this.player.x, this.player.y, this.milk.x, this.milk.y);
-    if (dist < this.player.width) {
-      return true;
-    }
+    if (dist < this.player.width) return true;
     return false;
   }
     
