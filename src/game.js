@@ -152,8 +152,11 @@ export default class MilkGame {
     ctx.fillRect(965, 270 + fillAmount, 20, 290 - fillAmount);
 
     ctx.font = "30px Arial"
+    ctx.textAlign = "right";
+    ctx.fillStyle = "white";
+    ctx.fillText(this.score, 955, 533);
     ctx.fillStyle = "pink";
-    ctx.fillText("Score", 300, 300, 300);
+    ctx.fillText("Score", 955, 563);
   }
 
   // check collisions
@@ -212,6 +215,7 @@ export default class MilkGame {
           newBot = new Bot3(this.dimensions);
         }
         this.bots.push(newBot);
+        console.log(this.bots);
       }
     }
 
@@ -248,16 +252,17 @@ export default class MilkGame {
       this.level.animate(this.ctx)
       this.milk.animate(this.ctx);
       
-      for(var i = 0; i < this.bots.length; i++){
+      for(var i = this.bots.length - 1; i >= 0; i--){
 
         // clear out of bounds bots
-        if ((this.bots[i].x < 0 || this.bots[i].x > this.dimensions.width) &&
-            (this.bots[i].y < 0 || this.bots[i].y > this.dimensions.height)) {
+        if (this.now - this.bots[i].createdAt > 1000 && (
+          this.bots[i].x < 0 || this.bots[i].x > this.dimensions.width ||
+          this.bots[i].y < 0 || this.bots[i].y > this.dimensions.height)) {
           this.bots.splice(i, 1);
+        } else {
+          this.bots[i].moveBot(this.player.x, this.player.y);
+          this.bots[i].animate(this.ctx);
         }
-
-        this.bots[i].moveBot(this.player.x, this.player.y);
-        this.bots[i].animate(this.ctx);
       }
 
       this.player.movePlayer(this.keys);
