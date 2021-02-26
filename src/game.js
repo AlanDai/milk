@@ -52,6 +52,7 @@ export default class MilkGame {
     this.running = true;
     this.playing = true;
     this.score = 20;
+    this.displayScore = 20;
     this.gameStart = Date.now();
 
     this.milk = new Milk(this.dimensions);
@@ -142,19 +143,21 @@ export default class MilkGame {
 
   // score
   drawScore(ctx) {
+    if (this.score !== this.displayScore) this.score > this.displayScore ? this.displayScore++ : this.displayScore --;
+
     ctx.fillStyle = "pink";
     ctx.fillRect(960, 265, 30, 300);
     ctx.fillStyle = "white";
     ctx.fillRect(965, 270, 20, 290);
 
-    let fillAmount = (100 - Math.min(this.score, 100)) * 2.9
+    let fillAmount = (100 - Math.min(this.displayScore, 100)) * 2.9
     ctx.fillStyle = "lightgray";
     ctx.fillRect(965, 270 + fillAmount, 20, 290 - fillAmount);
 
     ctx.font = "30px Arial"
     ctx.textAlign = "right";
     ctx.fillStyle = "white";
-    ctx.fillText(this.score, 955, 533);
+    ctx.fillText(this.displayScore, 955, 533);
     ctx.fillStyle = "pink";
     ctx.fillText("Score", 955, 563);
   }
