@@ -59,11 +59,20 @@ export default class Bot3 {
     this.y += this.dy;
   }
 
-  handleBotFrame() {
-    if (this.frameX < 3 && this.moving) {
-      this.frameX++;
-    } else {
+  handleBotFrame(directionChange) {
+    if (directionChange) {
       this.frameX = 0;
+      if (this.dx < 0 && this.dy < 0) {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 1 : this.frameY = 3;
+      } else if (this.dx < 0 && this.dy > 0) {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 1 : this.frameY = 0;
+      } else if (this.dx > 0 && this.dy < 0) {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 2 : this.frameY = 3;
+      } else {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 2 : this.frameY = 0;
+      }
+    } else {
+      this.frameX < 3 && this.moving ? this.frameX++ : this.frameX = 0;
     }
   }
 

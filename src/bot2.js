@@ -66,32 +66,46 @@ export default class Bot2 {
   }
 
   moveBot(playerX, playerY) {
-    this.handleBotFrame();
     
+    let directionChange = false;
     let dist = this.dist(playerX, playerY, this.x, this.y);
     if (!this.chasing && dist < 200) {
       this.chasing = true;
     }
-
+    
     if (this.chasing && dist > 300) {
       this.chasing = false;
     }
     
     if (this.chasing) {
       let movement = this.calcMoveTo(this.speed, this.x, this.y, playerX, playerY);
+
+      if (this.dx * movement[0] < 0 || this.dy * movement[1] < 0) directionChange = true;
+
       this.dx = movement[0];
       this.dy = movement[1];
     }
-
+    
     this.x += this.dx;
     this.y += this.dy;
+
+    this.handleBotFrame(directionChange);
   }
 
-  handleBotFrame() {
-    if (this.frameX < 3 && this.moving) {
-      this.frameX++;
-    } else {
+  handleBotFrame(directionChange) {
+    if (directionChange) {
       this.frameX = 0;
+      if (this.dx < 0 && this.dy < 0) {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 1 : this.frameY = 3;
+      } else if (this.dx < 0 && this.dy > 0) {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 1 : this.frameY = 0;
+      } else if (this.dx > 0 && this.dy < 0) {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 2 : this.frameY = 3;
+      } else {
+        Math.abs(this.dx) > Math.abs(this.dy) ? this.frameY = 2 : this.frameY = 0;
+      }
+    } else {
+      this.frameX < 3 && this.moving ? this.frameX++ : this.frameX = 0;
     }
   }
 

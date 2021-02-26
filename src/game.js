@@ -215,7 +215,6 @@ export default class MilkGame {
           newBot = new Bot3(this.dimensions);
         }
         this.bots.push(newBot);
-        console.log(this.bots);
       }
     }
 
