@@ -24,6 +24,7 @@ export default class MilkGame {
     this.botSpeed = "medium";
     this.scoreSpeed = "medium";
     this.selectedBots = [true, true, true]
+    this.endlessMode = false;
 
     // throttle
     this.then = Date.now();
@@ -183,9 +184,13 @@ export default class MilkGame {
     for (let i = 0; i < botCheckboxes.length; i++) {
       botCheckboxes[i].addEventListener("change", function(e) {
         this.selectedBots[i] = e.target.checked;
-        console.log(this.selectedBots);
       }.bind(this))
     }
+
+    // options endless mode
+    document.getElementById("options-endless-mode").addEventListener("change", function(e) {
+      this.endlessMode = e.target.checked
+    }.bind(this))
 
     document.getElementById("level-reset").addEventListener("click", this.restart)
   }
@@ -258,7 +263,7 @@ export default class MilkGame {
   // collision handling
   handleMilkCollision() {
     this.milk = new Milk(this.dimensions)
-    this.score += 5;
+    this.score += 100;
   }
 
   handleBotCollision(dist) {
@@ -321,7 +326,7 @@ export default class MilkGame {
       // score handling
       if (this.score <= 0) {
         this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
-      } else if (this.score >= 100) {
+      } else if (this.score >= 100 && !this.endlessMode) {
          this.levelOver();
       }
 
