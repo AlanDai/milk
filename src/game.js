@@ -88,6 +88,8 @@ export default class MilkGame {
   }
 
   pause() {
+    if (!this.playing || !this.running) return;
+
     this.running = false;
     this.pauseTime = Date.now();
     document.getElementById("pause").style.display = "none";
