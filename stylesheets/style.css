@@ -11,7 +11,7 @@ body * {
   margin: 10px;
 }
 
-input:focus {
+*:focus {
   outline: none;
 }
 
@@ -187,10 +187,6 @@ input[type='checkbox']:checked:after {
 
 #pause, #resume {
   width: 90px;
-}
-
-#controls *:focus {
-  outline: none;
 }
 
 #controls button:hover {

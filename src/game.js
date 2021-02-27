@@ -94,6 +94,8 @@ export default class MilkGame {
   }
 
   resume() {
+    if (document.getElementById("options-screen").style.display === "block") return;
+
     this.running = true;
     document.getElementById("pause").style.display = "block";
     document.getElementById("resume").style.display = "none";
@@ -114,7 +116,8 @@ export default class MilkGame {
     document.getElementById("level-over-screen").style.display = "block";
   }
 
-  options() {
+  options(e) {
+    e.preventDefault();
     if (document.getElementById("options-screen").style.display === "none") {
       document.getElementById("options-screen").style.display = "block";
       if (this.playing) this.pause();
@@ -135,6 +138,7 @@ export default class MilkGame {
     document.getElementById("resume").addEventListener("click", this.resume);
     document.getElementById("reset").addEventListener("click", this.restart);
     document.getElementById("options").addEventListener("click", this.options);
+    document.getElementById("options").addEventListener("keydown", function(e) { e.preventDefault(); });
 
     // disable keyboard controls for input items
     const list = document.getElementsByTagName("INPUT")
@@ -168,6 +172,7 @@ export default class MilkGame {
     for (let i = 0; i < botCheckboxes.length; i++) {
       botCheckboxes[i].addEventListener("change", function(e) {
         this.selectedBots[i] = e.target.checked;
+        console.log(this.selectedBots);
       }.bind(this))
     }
 
@@ -176,6 +181,8 @@ export default class MilkGame {
 
   handleKeyDown(e) {
     if(e.key === " ") {
+      if (document.getElementById("options-screen").style.display === "block") return;
+
       if (this.startScreen) {
         this.showBots();
       } else if (this.playing) {
@@ -260,6 +267,8 @@ export default class MilkGame {
 
       let numNewBots = Math.floor(Math.random() * 3);
       for (let i = 0; i < numNewBots; i++) {
+        if (!this.selectedBots[0] && !this.selectedBots[1] && !this.selectedBots[2]) break;
+
         let newBot = null;
         let val = (Math.random() * 10);
 
