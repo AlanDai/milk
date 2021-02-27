@@ -159,7 +159,7 @@ export default class MilkGame {
       if (scoreSpeed[i].checked) this.scoreSpeed = scoreSpeed[i].value;
       scoreSpeed[i].addEventListener("change", function(e) {
         this.scoreSpeed = e.target.value;
-      })
+      }.bind(this))
     }
 
     document.getElementById("level-reset").addEventListener("click", this.restart)
@@ -267,7 +267,14 @@ export default class MilkGame {
     // score decay
     if (this.now - this.lastScore > 2000) {
       this.lastScore = this.now;
-      this.score -= 2;
+
+      if (this.scoreSpeed === "slow") {
+        this.score -= 1;
+      } else if (this.scoreSpeed === "medium") {
+        this.score -= 2;
+      } else {
+        this.score -= 5;
+      }
     }
 
     // frame throttling
