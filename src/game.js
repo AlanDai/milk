@@ -19,6 +19,9 @@ export default class MilkGame {
 
     // options screen
     this.optionsScreen = false;
+    this.playerSpeed = "medium";
+    this.botSpeed = "medium";
+    this.scoreSpeed = "medium";
 
     // throttle
     this.then = Date.now();
@@ -136,6 +139,27 @@ export default class MilkGame {
     const list = document.getElementsByTagName("INPUT")
     for (let i = 0; i < list.length; i++) {
       list[i].addEventListener("keydown", function(event) { event.preventDefault() })
+    }
+
+    // options screen
+    const playerSpeed = document.getElementsByName("player-speed");
+    for (let i = 0; i < playerSpeed.length; i++) {
+      playerSpeed[i].addEventListener("change", function(e) {
+        this.playerSpeed = e.target.value;
+      }.bind(this))
+    }
+    const botSpeed = document.getElementsByName("bot-speed");
+    for (let i = 0; i < botSpeed.length; i++) {
+      botSpeed[i].addEventListener("change", function(e) {
+        this.botSpeed = e.target.value;
+      }.bind(this))
+    }
+    const scoreSpeed = document.getElementsByName("score-speed");
+    for (let i = 0; i < scoreSpeed.length; i++) {
+      if (scoreSpeed[i].checked) this.scoreSpeed = scoreSpeed[i].value;
+      scoreSpeed[i].addEventListener("change", function(e) {
+        this.scoreSpeed = e.target.value;
+      })
     }
 
     document.getElementById("level-reset").addEventListener("click", this.restart)
@@ -281,12 +305,12 @@ export default class MilkGame {
           this.bots[i].y < 0 || this.bots[i].y > this.dimensions.height)) {
           this.bots.splice(i, 1);
         } else {
-          this.bots[i].moveBot(this.player.x, this.player.y);
+          this.bots[i].moveBot(this.player.x, this.player.y, this.botSpeed);
           this.bots[i].animate(this.ctx);
         }
       }
 
-      this.player.movePlayer(this.keys);
+      this.player.movePlayer(this.keys, this.playerSpeed);
       this.player.animate(this.ctx);
       
       this.drawScore(this.ctx);

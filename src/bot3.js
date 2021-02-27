@@ -52,8 +52,25 @@ export default class Bot3 {
     }
   }
 
-  moveBot() {
+  moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
+
+    if (speed === "slow") {
+      if (this.dx < 0)  this.dx = -5;
+      if (this.dx > 0) this.dx = 5;
+      if (this.dy < 0)  this.dy = -5;
+      if (this.dy > 0) this.dy = 5;
+    } else if (speed === "medium") {
+      if (this.dx < 0)  this.dx = -10;
+      if (this.dx > 0) this.dx = 10;
+      if (this.dy < 0)  this.dy = -10;
+      if (this.dy > 0) this.dy = 10;
+    } else {
+      if (this.dx < 0)  this.dx = -20;
+      if (this.dx > 0) this.dx = 20;
+      if (this.dy < 0)  this.dy = -20;
+      if (this.dy > 0) this.dy = 20;
+    }
 
     this.x += this.dx;
     this.y += this.dy;

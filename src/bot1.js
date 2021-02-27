@@ -23,6 +23,8 @@ export default class Bot1 {
     
     this.moving = true;
     this.createdAt = Date.now();
+
+    this.moveBot = this.moveBot.bind(this);
   }
 
   generateStartValues() {
@@ -64,8 +66,16 @@ export default class Bot1 {
     return [speed * Math.cos(angle), speed * Math.sin(angle)];
   }
 
-  moveBot(playerX, playerY) {
+  moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
+
+    if (speed === "slow") {
+      this.speed = 1;
+    } else if (speed === "medium") {
+      this.speed = 2;
+    } else {
+      this.speed = 4;
+    }
 
     let movement = this.calcMoveTo(this.speed, this.x, this.y, playerX, playerY);
     this.dx = movement[0];

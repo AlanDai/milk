@@ -20,8 +20,16 @@ export default class Player {
     this.createdAt = Date.now();
   }
 
-  movePlayer(keys) {
+  movePlayer(keys, speed) {
     this.handlePlayerFrame();
+
+    if (speed === "slow") {
+      this.speed = 5;
+    } else if (speed === "medium") {
+      this.speed = 10;
+    } else {
+      this.speed = 20;
+    }
 
     // down
     if (keys['ArrowDown'] && this.y < this.dimensions.height - this.height) {

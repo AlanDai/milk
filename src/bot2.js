@@ -24,6 +24,8 @@ export default class Bot2 {
     
     this.moving = true;
     this.createdAt = Date.now();
+
+    this.moveBot = this.moveBot.bind(this);
   }
 
   generateStartValues() {
@@ -65,8 +67,16 @@ export default class Bot2 {
     return [speed * Math.cos(angle), speed * Math.sin(angle)];
   }
 
-  moveBot(playerX, playerY) {
+  moveBot(playerX, playerY, speed) {
     
+    if (speed === "slow") {
+      this.speed = 2;
+    } else if (speed === "medium") {
+      this.speed = 4;
+    } else {
+      this.speed = 8;
+    }
+
     let directionChange = false;
     let dist = this.dist(playerX, playerY, this.x, this.y);
     if (!this.chasing && dist < 200) {
