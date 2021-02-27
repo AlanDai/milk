@@ -121,13 +121,14 @@ export default class MilkGame {
 
   options(e) {
     e.preventDefault();
-    if (document.getElementById("options-screen").style.display === "none") {
+    if (!this.optionsScreen) {
       document.getElementById("options-screen").style.display = "block";
       if (this.playing) this.pause();
     } else {
       document.getElementById("options-screen").style.display = "none";
       if (this.playing) this.resume();
     }
+    this.optionsScreen = !this.optionsScreen;
   }
 
   // player movement
@@ -184,7 +185,7 @@ export default class MilkGame {
 
   handleKeyDown(e) {
     if(e.key === " ") {
-      if (document.getElementById("options-screen").style.display === "block") return;
+      if (this.optionsScreen) return;
 
       if (this.startScreen) {
         this.showBots();
@@ -276,13 +277,15 @@ export default class MilkGame {
         let val = (Math.random() * 10);
 
         while (newBot === null) {
-          if (this.selectedBots[0] && val > 9 && this.now - this.gameStart > 10000) {
+          if (val > 9 && this.selectedBots[0]) {
+            if (!this.selectedBots[2] || this.now - this.gameStart > 10000) newBot = new Bot1(this.dimensions);
             newBot = new Bot1(this.dimensions);
-          } else if (this.selectedBots[1] && val > 7 && this.now - this.gameStart > 5000) {
-            newBot = new Bot2(this.dimensions);
+          } else if (val > 7 && this.selectedBots[1]) {
+            if (!this.selectedBots[2] || this.now - this.gameStart > 5000) newBot = new Bot2(this.dimensions);
           } else if (this.selectedBots[2]) {
             newBot = new Bot3(this.dimensions);
           }
+          val = (Math.random() * 10);
         }
 
         this.bots.push(newBot);
@@ -290,7 +293,7 @@ export default class MilkGame {
     }
 
     // score decay
-    if (this.now - this.lastScore > 500 && this.running) {
+    if (this.now - this.lastScore > 2000 && this.running) {
       this.lastScore = this.now;
 
       if (this.scoreSpeed === "slow") {
@@ -333,8 +336,8 @@ export default class MilkGame {
 
         // clear out of bounds bots
         if (this.now - this.bots[i].createdAt > 1000 && (
-          this.bots[i].x < 0 || this.bots[i].x > this.dimensions.width ||
-          this.bots[i].y < 0 || this.bots[i].y > this.dimensions.height)) {
+          this.bots[i].x < -100 || this.bots[i].x > this.dimensions.width + 100 ||
+          this.bots[i].y < -100 || this.bots[i].y > this.dimensions.height + 100)) {
           this.bots.splice(i, 1);
         } else {
           this.bots[i].moveBot(this.player.x, this.player.y, this.botSpeed);
