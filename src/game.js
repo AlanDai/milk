@@ -15,8 +15,10 @@ export default class MilkGame {
     this.level = new Level(this.dimensions);
     this.level.animate(this.ctx);
     this.playing = false;
-  
     this.lastScore = Date.now() + 1000;
+
+    // options screen
+    this.optionsScreen = false;
 
     // throttle
     this.then = Date.now();
@@ -33,6 +35,7 @@ export default class MilkGame {
     this.restart = this.restart.bind(this);
     this.pause = this.pause.bind(this);
     this.resume = this.resume.bind(this);
+    this.options = this.options.bind(this);
     this.checkMilkCollisions = this.checkMilkCollisions.bind(this);
     this.checkBotCollisions = this.checkBotCollisions.bind(this);
     this.animate = this.animate.bind(this);
@@ -107,6 +110,16 @@ export default class MilkGame {
     document.getElementById("level-over-screen").style.display = "block";
   }
 
+  options() {
+    if (document.getElementById("options-screen").style.display === "none") {
+      document.getElementById("options-screen").style.display = "block";
+      if (this.playing) this.pause();
+    } else {
+      document.getElementById("options-screen").style.display = "none";
+      if (this.playing) this.resume();
+    }
+  }
+
   // player movement
   registerEvents() {
     window.addEventListener("keydown", this.handleKeyDown.bind(this));
@@ -116,9 +129,15 @@ export default class MilkGame {
     document.getElementById("start").addEventListener("click", this.play);
     document.getElementById("pause").addEventListener("click", this.pause);
     document.getElementById("resume").addEventListener("click", this.resume);
-    document.getElementById("reset").addEventListener("click", this.restart)
+    document.getElementById("reset").addEventListener("click", this.restart);
+    document.getElementById("options").addEventListener("click", this.options);
 
-    // placeholder
+    // disable keyboard controls for input items
+    const list = document.getElementsByTagName("INPUT")
+    for (let i = 0; i < list.length; i++) {
+      list[i].addEventListener("keydown", function(event) { event.preventDefault() })
+    }
+
     document.getElementById("level-reset").addEventListener("click", this.restart)
   }
 

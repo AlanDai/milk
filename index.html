@@ -39,6 +39,63 @@
     <button id="start">START</button>
     <p class="small-text-tips">(or press SPACE)</p>
   </div>
+  <div id="options-screen">
+    <h1>Options</h1>
+    <div id="options-screen-controls">
+      <div>
+        <div id="player-options">
+          <div>Player Speed</div>
+          <div class="options-radio">
+            <span>SLOW</span>
+            <input type="radio" value="slow" name="player-speed">
+            <input type="radio" checked value="medium" name="player-speed">
+            <input type="radio" value="fast" name="player-speed">
+            <span>FAST</span>
+          </div>
+        </div>
+        <div id="bot-options">
+          <div>Bot Speed</div>
+          <div class="options-radio">
+            <span>SLOW</span>
+            <input type="radio" value="slow" name="bot-speed">
+            <input type="radio" checked value="medium" name="bot-speed">
+            <input type="radio" value="fast" name="bot-speed">
+            <span>FAST</span>
+          </div>
+        </div>
+        <div id="score-options">
+          <div>Score Decay</div>
+          <div class="options-radio">
+            <span>SLOW</span>
+            <input type="radio" value="slow" name="score-speed">
+            <input type="radio" checked value="medium" name="score-speed">
+            <input type="radio" value="fast" name="score-speed">
+            <span>FAST</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div id="bot-selection-options">
+          <div>Choose which bots will spawn</div>
+          <div class="bot-selector">
+            <input type="checkbox" checked>
+            <img src="assets/bot1-front.png">
+            <span>The social butterfly</span>
+          </div>
+          <div class="bot-selector">
+            <input type="checkbox" checked>
+            <img src="assets/bot2-front.png">
+            <span>The casual conversationalist</span>
+          </div>
+          <div class="bot-selector">
+            <input type="checkbox" checked>
+            <img src="assets/bot3-front.png">
+            <span>The speedster</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="game-over-screen">
     <h1>Game over</h1>
     <p id="game-over-message"></p>
@@ -63,6 +120,7 @@
     <audio id="music" controls loop>
       <source src="assets/background-music.mp3" type="audio/mpeg">
     </audio>
+    <button id="options">OPTIONS</button>
     <button id="pause">PAUSE</button>
     <button id="resume">RESUME</button>
     <a href="https://github.com/AlanDai/milk" target="_blank" rel="noopener noreferrer"><img src="assets/github.png"></a>
