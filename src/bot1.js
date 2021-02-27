@@ -69,6 +69,12 @@ export default class Bot1 {
   moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
 
+    if (Date.now() - this.createdAt > 30000) {
+      this.x += this.dx;
+      this.y += this.dy;
+      return;
+    }
+
     if (speed === "slow") {
       this.speed = 1;
     } else if (speed === "medium") {
