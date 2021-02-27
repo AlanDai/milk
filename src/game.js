@@ -22,6 +22,7 @@ export default class MilkGame {
     this.playerSpeed = "medium";
     this.botSpeed = "medium";
     this.scoreSpeed = "medium";
+    this.selectedBots = [true, true, true]
 
     // throttle
     this.then = Date.now();
@@ -141,7 +142,7 @@ export default class MilkGame {
       list[i].addEventListener("keydown", function(event) { event.preventDefault() })
     }
 
-    // options screen
+    // options radio inputs
     const playerSpeed = document.getElementsByName("player-speed");
     for (let i = 0; i < playerSpeed.length; i++) {
       playerSpeed[i].addEventListener("change", function(e) {
@@ -159,6 +160,14 @@ export default class MilkGame {
       if (scoreSpeed[i].checked) this.scoreSpeed = scoreSpeed[i].value;
       scoreSpeed[i].addEventListener("change", function(e) {
         this.scoreSpeed = e.target.value;
+      }.bind(this))
+    }
+
+    // options bot selector
+    const botCheckboxes = document.getElementsByClassName("bot-selector-input");
+    for (let i = 0; i < botCheckboxes.length; i++) {
+      botCheckboxes[i].addEventListener("change", function(e) {
+        this.selectedBots[i] = e.target.checked;
       }.bind(this))
     }
 
@@ -251,15 +260,19 @@ export default class MilkGame {
 
       let numNewBots = Math.floor(Math.random() * 3);
       for (let i = 0; i < numNewBots; i++) {
-        let newBot;
-        let val = (Math.random() * 10)
-        if (val > 9 && this.now - this.gameStart > 10000) {
-          newBot = new Bot1(this.dimensions);
-        } else if (val > 7 && this.now - this.gameStart > 5000) {
-          newBot = new Bot2(this.dimensions);
-        } else {
-          newBot = new Bot3(this.dimensions);
+        let newBot = null;
+        let val = (Math.random() * 10);
+
+        while (newBot === null) {
+          if (this.selectedBots[0] && val > 9 && this.now - this.gameStart > 10000) {
+            newBot = new Bot1(this.dimensions);
+          } else if (this.selectedBots[1] && val > 7 && this.now - this.gameStart > 5000) {
+            newBot = new Bot2(this.dimensions);
+          } else if (this.selectedBots[2]) {
+            newBot = new Bot3(this.dimensions);
+          }
         }
+
         this.bots.push(newBot);
       }
     }
