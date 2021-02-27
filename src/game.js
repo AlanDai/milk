@@ -108,11 +108,16 @@ export default class MilkGame {
     this.animate();
   }
 
-  gameOver(innerText) {
+  gameOver(innerText, score) {
     this.running = false;
     this.playing = false;
     document.getElementById("game-over-screen").style.display = "block";
     document.getElementById("game-over-message").innerHTML = innerText;
+
+    const gos = document.getElementById("game-over-score");
+    score ? gos.style.display = "block" : gos.style.display = "none";
+    gos.innerHTML = `Final score: ${score}`
+      
   }
 
   levelOver() {
@@ -258,7 +263,7 @@ export default class MilkGame {
 
   handleBotCollision(dist) {
     if (dist < Math.random() * 150) {
-      this.gameOver("Should have socially distanced - taste and smell are overrated anyways");
+      this.gameOver("Should have socially distanced - taste and smell are overrated anyways", this.score);
     }
   }
 

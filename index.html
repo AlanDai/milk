@@ -73,9 +73,6 @@
             <span>FAST</span>
           </div>
         </div>
-        <div>
-          <input type="checkbox">
-        </div>
       </div>
       <div>
         <div id="bot-selection-options">
@@ -98,11 +95,17 @@
         </div>
       </div>
     </div>
+    <div id="options-endless-mode">
+      <input id="options-endless-checkbox" type="checkbox">
+      <span>Endless Mode</span>
+      <span>(play till you get caught!)</span>
+    </div>
   </div>
   <div id="game-over-screen">
     <h1>Game over</h1>
     <p id="game-over-message"></p>
     <p>Lucky for you, Nurse Joy has brought you to full health</p>
+    <p id="game-over-score"></p>
     <img src="assets/gameover.png" />
     <br/>
     <button id="reset">RESTART</button>
@@ -112,6 +115,7 @@
     <p>Wow, you've satisfied your milk quench</p>
     <p>But another day will come and your thirst will come back</p>
     </br>
+    <p>Try changing the game difficulty in the options menu!</p>
     <p>🗺 More stage layouts in the works 🗺</p>
     <button id="level-reset">RESTART</button>
     <p class="small-text-tips">(or press SPACE)</p>

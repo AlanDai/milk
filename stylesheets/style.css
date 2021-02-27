@@ -85,7 +85,7 @@ input[type='checkbox']:checked:after {
   top: 60px;
 }
 
-#start-screen h1, #bot-screen h1, #options-screen h1, #game-over-screen h {
+#start-screen h1, #bot-screen h1, #options-screen h1, #game-over-screen h1 {
   font-size: 35px;
   background-color: pink;
   padding: 0 25px 0 25px;
@@ -110,26 +110,29 @@ input[type='checkbox']:checked:after {
 
 #game-over-screen {
   display: none;
-  top: 85px;
+  top: 62px;
   background: rgba(255, 255, 255, 0.8);
+}
+
+#game-over-score {
+  margin-top: 10px;
 }
 
 #level-over-screen {
   display: none;
   margin-top: 20px;
-  top: 170px;
+  top: 160px;
   background: rgba(255, 255, 255, 0.8);
 }
 
 #options-screen {
   display: none;
-  top: 105px;
+  top: 85px;
   padding: 60px;
   background: rgba(255, 255, 255, 1);
 }
 
 #options-screen h1 {
-  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -141,6 +144,28 @@ input[type='checkbox']:checked:after {
 }
 
 .options-radio span {
+  font-size: 14px;
+}
+
+#options-endless-mode {
+  margin-top: 25px;
+}
+
+#options-endless-checkbox {
+  top: -4px;
+  margin-right: 25px;
+}
+
+#options-endless-checkbox:after {
+  top: -4px;
+}
+
+#options-endless-mode span {
+  top: 10px;
+  margin: 0 5px 0 0;
+}
+
+#options-endless-mode span:last-child {
   font-size: 14px;
 }
 
