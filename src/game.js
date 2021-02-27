@@ -16,6 +16,7 @@ export default class MilkGame {
     this.level.animate(this.ctx);
     this.playing = false;
     this.lastScore = Date.now() + 1000;
+    this.pauseTime;
 
     // options screen
     this.optionsScreen = false;
@@ -88,6 +89,7 @@ export default class MilkGame {
 
   pause() {
     this.running = false;
+    this.pauseTime = Date.now();
     document.getElementById("pause").style.display = "none";
     document.getElementById("resume").style.display = "block";
     document.getElementById("music").pause();
@@ -97,6 +99,7 @@ export default class MilkGame {
     if (document.getElementById("options-screen").style.display === "block") return;
 
     this.running = true;
+    this.lastScore += (Date.now() - this.pauseTime);
     document.getElementById("pause").style.display = "block";
     document.getElementById("resume").style.display = "none";
     document.getElementById("music").play();
@@ -287,7 +290,7 @@ export default class MilkGame {
     }
 
     // score decay
-    if (this.now - this.lastScore > 2000) {
+    if (this.now - this.lastScore > 500 && this.running) {
       this.lastScore = this.now;
 
       if (this.scoreSpeed === "slow") {
