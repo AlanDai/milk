@@ -40,7 +40,7 @@ The framerate of canvas using the requestAnimationFrame method was about 60fps. 
 My solution was to have an internal clock, using `Date.now()` to calculate the elapsed time from the last frame update and a `this.running` instance variable to achieve the functionality I wanted without sacrificing flexibility.
 
 ### To Dos:
-- A control panel that allows you to adjust game difficulty (e.g. frequency of bot spawning, point gain/decays, etc.)
-- Fix bot animation such that bot chasing you have the correct frames being rendered
 - New items (like a super milk that is worth more but move around or an item that allows you to eliminate bots)
 - General bot refactor; generalize some behavior into a parent class to make code more DRY
+- Add distance-based opacity to the rings denoting the bot collision radius
+- New level layouts with collidable walls and a different theme (i.e. water based with a water background and different sprite animations)
