@@ -327,7 +327,7 @@ export default class MilkGame {
       if (this.score <= 0) {
         this.gameOver("Looks like you succumbed to dehydration - gotta manage that thirst");
       } else if (this.score >= 100 && !this.endlessMode) {
-         this.levelOver();
+        this.levelOver();
       }
 
       // collisions
