@@ -9,6 +9,7 @@ export default class Bot1 {
 
     // position
     this.x, this.y;
+    this.playerDistance;
     this.speed = 2;
     this.dx = 0;
     this.dy = 0;
@@ -69,6 +70,8 @@ export default class Bot1 {
   moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
 
+    this.playerDistance = this.dist(playerX, playerY, this.x, this.y)
+
     if (Date.now() - this.createdAt > 30000) {
       this.x += this.dx;
       this.y += this.dy;
@@ -99,6 +102,13 @@ export default class Bot1 {
     }
   }
 
+  drawCircle(ctx, x, y, width, height, playerDistance) {
+    ctx.globalAlpha = Math.min(1, width/(playerDistance-width/2))
+    ctx.beginPath();
+    ctx.arc(x + width/6, y + height/6, 50, 0, 2*Math.PI);
+    ctx.stroke();
+  }
+
   animate(ctx) {
     ctx.drawImage(this.image,
       this.width * this.frameX,
@@ -110,8 +120,11 @@ export default class Bot1 {
       this.width/3,
       this.height/3);
 
-    ctx.beginPath();
-    ctx.arc(this.x + this.width/6, this.y + this.height/6, 50, 0, 2*Math.PI);
-    ctx.stroke();
+    if (this.playerDistance) {
+      console.log(this.playerDistance);
+    }
+
+    this.drawCircle(ctx, this.x, this.y, this.width, this.height, this.playerDistance)
+    ctx.globalAlpha = 1
   }
 }

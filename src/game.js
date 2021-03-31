@@ -263,7 +263,7 @@ export default class MilkGame {
   // collision handling
   handleMilkCollision() {
     this.milk = new Milk(this.dimensions)
-    this.score += 100;
+    this.score += 5;
   }
 
   handleBotCollision(dist) {
