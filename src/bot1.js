@@ -1,3 +1,5 @@
+const Util = require('./util.js')
+
 export default class Bot1 {
   constructor(dimensions) {
     const botSprite = new Image();
@@ -18,7 +20,7 @@ export default class Bot1 {
     this.generateStartValues();
 
     this.width = 109;
-    this.height = 174;
+    this.height = 176;
     this.frameX = 0;
     this.frameY;
     
@@ -56,11 +58,11 @@ export default class Bot1 {
     }
   }
 
-  dist(x1, y1, x2, y2) {
-    return Math.sqrt(
-      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
-    )
-  }
+  // dist(x1, y1, x2, y2) {
+  //   return Math.sqrt(
+  //     Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
+  //   )
+  // }
   
   calcMoveTo(speed, sX, sY, dX, dY) {
     let angle = Math.atan2((dY - sY), (dX - sX));
@@ -70,7 +72,7 @@ export default class Bot1 {
   moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
 
-    this.playerDistance = this.dist(playerX, playerY, this.x, this.y)
+    this.playerDistance = Util.dist(playerX, playerY, this.x, this.y)
 
     if (Date.now() - this.createdAt > 30000) {
       this.x += this.dx;
