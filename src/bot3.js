@@ -1,3 +1,5 @@
+const Util = require('./util.js');
+
 export default class Bot3 {
   constructor(dimensions) {
     const botSprite = new Image();
@@ -56,7 +58,7 @@ export default class Bot3 {
   moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
 
-    this.playerDistance = this.dist(playerX, playerY, this.x, this.y)
+    this.playerDistance = Util.dist(playerX, playerY, this.x, this.y)
 
     if (speed === "slow") {
       if (this.dx < 0)  this.dx = -5;
@@ -94,12 +96,6 @@ export default class Bot3 {
     } else {
       this.frameX < 3 && this.moving ? this.frameX++ : this.frameX = 0;
     }
-  }
-
-  dist(x1, y1, x2, y2) {
-    return Math.sqrt(
-      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
-    )
   }
 
   drawCircle(ctx, x, y, width, height, playerDistance) {

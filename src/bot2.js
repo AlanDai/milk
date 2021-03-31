@@ -1,3 +1,5 @@
+const Util = require('./util.js');
+
 export default class Bot2 {
   constructor(dimensions) {
     const botSprite = new Image();
@@ -57,12 +59,6 @@ export default class Bot2 {
     }
   }
 
-  dist(x1, y1, x2, y2) {
-    return Math.sqrt(
-      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
-    )
-  }
-
   calcMoveTo(speed, sX, sY, dX, dY) {
     let angle = Math.atan2((dY - sY), (dX - sX));
     return [speed * Math.cos(angle), speed * Math.sin(angle)];
@@ -79,8 +75,8 @@ export default class Bot2 {
     }
 
     let directionChange = false;
-    let dist = this.dist(playerX, playerY, this.x, this.y);
-    this.playerDistance = this.dist(playerX, playerY, this.x, this.y)
+    let dist = Util.dist(playerX, playerY, this.x, this.y);
+    this.playerDistance = dist
 
     if (!this.chasing && dist < 200) {
       this.chasing = true;
