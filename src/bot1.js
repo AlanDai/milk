@@ -120,10 +120,6 @@ export default class Bot1 {
       this.width/3,
       this.height/3);
 
-    if (this.playerDistance) {
-      console.log(this.playerDistance);
-    }
-
     this.drawCircle(ctx, this.x, this.y, this.width, this.height, this.playerDistance)
     ctx.globalAlpha = 1
   }

@@ -9,6 +9,7 @@ export default class Bot3 {
 
     // position
     this.x, this.y;
+    this.playerDistance;
     // axially separated speed
     this.dx = 0;
     this.dy = 0;
@@ -55,6 +56,8 @@ export default class Bot3 {
   moveBot(playerX, playerY, speed) {
     this.handleBotFrame();
 
+    this.playerDistance = this.dist(playerX, playerY, this.x, this.y)
+
     if (speed === "slow") {
       if (this.dx < 0)  this.dx = -5;
       if (this.dx > 0) this.dx = 5;
@@ -93,6 +96,19 @@ export default class Bot3 {
     }
   }
 
+  dist(x1, y1, x2, y2) {
+    return Math.sqrt(
+      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
+    )
+  }
+
+  drawCircle(ctx, x, y, width, height, playerDistance) {
+    ctx.globalAlpha = Math.min(1, width/(playerDistance-width/2))
+    ctx.beginPath();
+    ctx.arc(x + width/6, y + height/6, 50, 0, 2*Math.PI);
+    ctx.stroke();
+  }
+
   animate(ctx) {
     ctx.drawImage(this.image,
       this.width * this.frameX,
@@ -104,8 +120,8 @@ export default class Bot3 {
       this.width/3,
       this.height/3);
 
-    ctx.beginPath();
-    ctx.arc(this.x + this.width/6, this.y + this.height/6, 50, 0, 2*Math.PI);
-    ctx.stroke();
+    this.drawCircle(ctx, this.x, this.y, this.width, this.height, this.playerDistance)
+    ctx.globalAlpha = 1
+
   }
 }

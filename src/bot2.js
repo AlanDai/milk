@@ -9,6 +9,7 @@ export default class Bot2 {
 
     // position
     this.x, this.y;
+    this.playerDistance;
     this.speed = 4;
     this.dx = 0;
     this.dy = 0;
@@ -79,6 +80,8 @@ export default class Bot2 {
 
     let directionChange = false;
     let dist = this.dist(playerX, playerY, this.x, this.y);
+    this.playerDistance = this.dist(playerX, playerY, this.x, this.y)
+
     if (!this.chasing && dist < 200) {
       this.chasing = true;
     }
@@ -119,6 +122,13 @@ export default class Bot2 {
     }
   }
 
+  drawCircle(ctx, x, y, width, height, playerDistance) {
+    ctx.globalAlpha = Math.min(1, width/(playerDistance-width/2))
+    ctx.beginPath();
+    ctx.arc(x + width/2, y + height/2, 50, 0, 2*Math.PI);
+    ctx.stroke();
+  }
+
   animate(ctx) {
     ctx.drawImage(this.image,
       this.width * this.frameX,
@@ -130,8 +140,7 @@ export default class Bot2 {
       this.width,
       this.height);
  
-    ctx.beginPath();
-    ctx.arc(this.x + this.width/2, this.y + this.height/2, 50, 0, 2*Math.PI);
-    ctx.stroke();
+    this.drawCircle(ctx, this.x, this.y, this.width, this.height, this.playerDistance)
+    ctx.globalAlpha = 1
   }
 }
